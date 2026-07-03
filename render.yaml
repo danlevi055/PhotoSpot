@@ -1,0 +1,13 @@
+# הגדרות פריסה ל-Render (Blueprint)
+# Render קורא את הקובץ הזה ויוצר את השירות אוטומטית.
+services:
+  - type: web              # שירות web (מקבל בקשות HTTP/HTTPS)
+    name: photospot        # שם השירות (יהפוך לחלק מהכתובת)
+    runtime: python
+    plan: free             # החבילה החינמית
+    buildCommand: pip install -r requirements.txt
+    # gunicorn מאזין על הפורט ש-Render מספק דרך משתנה הסביבה $PORT
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"

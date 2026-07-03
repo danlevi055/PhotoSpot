@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoSpot 📍</title>
+
+  <!-- Leaflet CSS מ-CDN רשמי -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <!-- ה-CSS שלנו -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>📍 PhotoSpot</h1>
+    <p class="subtitle">תיעוד תמונות עם מיקום</p>
+  </header>
+
+  <main>
+    <!-- ========== טופס העלאה ========== -->
+    <section class="card">
+      <h2>העלאת תמונה חדשה</h2>
+
+      <form id="upload-form">
+        <!-- בחירה/צילום תמונה (מותאם למובייל) -->
+        <label class="field">
+          <span>תמונה</span>
+          <input
+            type="file"
+            id="image-input"
+            name="image"
+            accept="image/*"
+            capture="environment"
+            required
+          >
+        </label>
+
+        <!-- תצוגה מקדימה -->
+        <img id="preview" class="preview hidden" alt="תצוגה מקדימה">
+
+        <!-- כיתוב אופציונלי -->
+        <label class="field">
+          <span>כיתוב (אופציונלי)</span>
+          <input
+            type="text"
+            id="caption-input"
+            name="caption"
+            placeholder="מה רואים בתמונה?"
+            maxlength="200"
+          >
+        </label>
+
+        <!-- מצב מיקום -->
+        <div id="location-status" class="location-status">
+          המיקום עדיין לא זוהה.
+        </div>
+        <button type="button" id="get-location-btn" class="btn secondary">
+          📡 קבל מיקום נוכחי
+        </button>
+
+        <button type="submit" id="submit-btn" class="btn">
+          ⬆️ שלח
+        </button>
+
+        <div id="form-message" class="form-message"></div>
+      </form>
+    </section>
+
+    <!-- ========== מפה ========== -->
+    <section class="card">
+      <h2>מפה</h2>
+      <div id="map"></div>
+    </section>
+
+    <!-- ========== גלריה ========== -->
+    <section class="card">
+      <h2>גלריה</h2>
+      <div id="gallery" class="gallery">
+        <p class="empty">אין עדיין תמונות.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Leaflet JS מ-CDN רשמי -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- ה-JavaScript שלנו -->
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+/* PhotoSpot - עיצוב */
+
+:root {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --primary: #2d7ef7;
+  --primary-dark: #1c5fc4;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --border: #e2e8f0;
+  --ok: #16a34a;
+  --error: #dc2626;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+header {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--primary);
+  color: #fff;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  opacity: 0.9;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* כרטיסים */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+/* שדות טופס */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.field span {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type="file"],
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* תצוגה מקדימה */
+.preview {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+
+.hidden {
+  display: none;
+}
+
+/* כפתורים */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.secondary {
+  background: #eef2f7;
+  color: var(--text);
+}
+
+.btn.secondary:hover {
+  background: #e2e8f0;
+}
+
+/* מצב מיקום */
+.location-status {
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.location-status.ok {
+  color: var(--ok);
+}
+
+.location-status.error {
+  color: var(--error);
+}
+
+/* הודעת טופס */
+.form-message {
+  margin-top: 10px;
+  font-weight: 600;
+  min-height: 1.2em;
+}
+
+.form-message.ok {
+  color: var(--ok);
+}
+
+.form-message.error {
+  color: var(--error);
+}
+
+/* מפה */
+#map {
+  height: 360px;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+/* גלריה */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.gallery-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-info {
+  padding: 8px;
+}
+
+.gallery-info .caption {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.gallery-info .meta {
+  margin: 2px 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 16px;
+}
