@@ -99,6 +99,61 @@ PORT=8080 python app.py
 gunicorn -w 2 -b 0.0.0.0:5000 app:app
 ```
 
+## פריסה לענן 24/7 (Render + Cloudinary + Postgres)
+
+כדי שהאתר יעבוד תמיד — גם כשהמחשב שלך כבוי — מריצים אותו על שרת ענן.
+מכיוון שהדיסק בענן זמני, שומרים את **התמונות ב-Cloudinary** ואת **המטא-דאטה ב-Postgres**.
+הקוד מזהה זאת אוטומטית לפי משתני הסביבה — מקומית הוא ממשיך לעבוד עם קבצים מקומיים.
+
+### 1. חשבון Cloudinary (אחסון תמונות, חינם)
+1. הירשמו ב-https://cloudinary.com/users/register_free
+2. בלוח הבקרה (Dashboard) חפשו את **API Environment variable** — מחרוזת בצורה:
+   `cloudinary://<api_key>:<api_secret>@<cloud_name>`
+3. זהו הערך של `CLOUDINARY_URL`.
+
+### 2. מסד נתונים Postgres (חינם — למשל Neon)
+1. הירשמו ב-https://neon.tech
+2. צרו Project חדש, והעתיקו את **Connection string** (מתחיל ב-`postgresql://...`).
+3. זהו הערך של `DATABASE_URL`.
+
+### 3. העלאת הקוד ל-GitHub
+```bash
+git add .
+git commit -m "Cloud storage support"
+git push
+```
+
+### 4. יצירת השירות ב-Render
+1. ב-https://dashboard.render.com לחצו **New + → Web Service** ובחרו את ה-repo.
+2. הגדרות:
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT`
+   - **Instance Type:** Free
+3. תחת **Environment Variables** הוסיפו את המשתנים הבאים:
+
+   | Key | Value |
+   |-----|-------|
+   | `DATABASE_URL`   | מחרוזת החיבור מ-Neon |
+   | `CLOUDINARY_URL` | המחרוזת מ-Cloudinary |
+   | `SECRET_KEY`     | טקסט אקראי ארוך (לחתימת session) |
+   | `ACCESS_CODE`    | קוד הכניסה לאתר (למשל `DAN123`) |
+
+4. לחצו **Create Web Service**. אחרי 2–4 דקות תקבלו כתובת HTTPS קבועה:
+   `https://photospot-xxxx.onrender.com`
+
+> ⏳ **חבילת Free:** השירות "נרדם" אחרי ~15 דק' חוסר פעילות; הכניסה הראשונה אחריה
+> לוקחת ~40 שניות. זה נורמלי בחבילה החינמית.
+
+## משתני סביבה
+
+| משתנה | חובה? | ברירת מחדל | תיאור |
+|--------|--------|-------------|--------|
+| `PORT`           | לא | `5000` | פורט ההאזנה |
+| `ACCESS_CODE`    | לא | `DAN123` | קוד הכניסה לאתר |
+| `SECRET_KEY`     | לא | ערך פיתוח | מפתח לחתימת session — **הגדירו ערך אמיתי בפרודקשן** |
+| `DATABASE_URL`   | לא | (SQLite מקומי) | אם מוגדר — משתמשים ב-Postgres |
+| `CLOUDINARY_URL` | לא | (תיקייה מקומית) | אם מוגדר — התמונות עולות ל-Cloudinary |
+
 ## הערות אבטחה
 
 - שמות הקבצים עוברים דרך `secure_filename` ומקבלים חותמת זמן ייחודית.

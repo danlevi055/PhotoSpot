@@ -26,10 +26,29 @@ body {
 }
 
 header {
+  position: relative;
   text-align: center;
   padding: 24px 16px;
   background: var(--primary);
   color: #fff;
+}
+
+.logout-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.logout-link:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.25);
 }
 
 header h1 {

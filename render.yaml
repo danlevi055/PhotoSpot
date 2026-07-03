@@ -11,3 +11,13 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.4"
+      # הערכים הבאים מוגדרים ידנית בלוח הבקרה של Render (לא נשמרים ב-git).
+      # sync: false אומר ל-Render לבקש/לשמור אותם בממשק ולא בקובץ.
+      - key: DATABASE_URL       # מחרוזת החיבור ל-Postgres (למשל מ-Neon)
+        sync: false
+      - key: CLOUDINARY_URL     # מפתח ה-Cloudinary לאחסון תמונות
+        sync: false
+      - key: SECRET_KEY         # מפתח אקראי לחתימת ה-session
+        sync: false
+      - key: ACCESS_CODE        # קוד הכניסה לאתר (ברירת מחדל בקוד: DAN123)
+        sync: false
